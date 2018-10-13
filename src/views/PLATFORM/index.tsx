@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import * as io from 'socket.io-client';
 import {withStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -7,29 +7,26 @@ import Tab from '@material-ui/core/Tab';
 import PersonPinIcon from '@material-ui/icons/PersonPin';
 import Typography from '@material-ui/core/Typography';
 
-function TabContainer(props: any) {
-    return (
-        <Typography component="div" style={{padding: 8 * 3}}>
-            {props.children}
-        </Typography>
-    );
-}
-
-const styles = (theme: any) => ({
-    root: {
-        flexGrow: 1,
-        width: '100%',
-        backgroundColor: theme.palette.background.paper,
-    },
-});
+import styles from './styles';
 
 class PLATFORM extends React.Component<any, any> {
 
-    state = {
-        value: 0,
-    };
+    constructor(props: any) {
+        super(props);
 
-    handleChange = (event: any, value: any) => {
+        this.state = {
+            value: 0,
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    componentDidMount() {
+        const socket = io('http://localhost:8000');
+        console.log(socket, 'socket');
+    }
+
+    handleChange(event: any, value: any) {
         this.setState({value});
     };
 
@@ -56,6 +53,14 @@ class PLATFORM extends React.Component<any, any> {
             </div>
         );
     }
+}
+
+function TabContainer(props: any) {
+    return (
+        <Typography component="div" style={{padding: 8 * 3}}>
+            {props.children}
+        </Typography>
+    );
 }
 
 export default withStyles(styles)(PLATFORM);
