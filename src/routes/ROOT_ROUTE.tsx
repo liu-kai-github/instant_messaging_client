@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 
 import LOGIN from "src/views";
+import PLATFORM from "src/views/PLATFORM";
 
 function ROOT_ROUTE() {
     return (
@@ -16,8 +17,14 @@ function ROOT_ROUTE() {
                 {/*exact*/}
             {/*/>*/}
             <Route
-                path=""
+                path="/"
                 component={LOGIN}
+                exact
+            />
+            <Route
+                path="/platform"
+                component={PLATFORM}
+                exact
             />
         </Switch>
     );

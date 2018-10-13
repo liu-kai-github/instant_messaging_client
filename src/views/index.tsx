@@ -26,14 +26,14 @@ class LOGIN extends React.Component<any, any> {
         this.state = {
             userNameValue: '',
             passwordValue: '',
+            errorText: '',
         };
 
         this.onEmailValueChange = this.onEmailValueChange.bind(this);
         this.onPasswordValueChange = this.onPasswordValueChange.bind(this);
         this.onSignInButtonClick = this.onSignInButtonClick.bind(this);
-    }
-
-    componentDidMount() {
+        // this.handleClick = this.handleClick.bind(this);
+        this.handleClose = this.handleClose.bind(this);
     }
 
     onEmailValueChange(event: any) {
@@ -50,19 +50,38 @@ class LOGIN extends React.Component<any, any> {
         });
     }
 
-    async onSignInButtonClick() {
+    async onSignInButtonClick(event: any) {
         const {userNameValue, passwordValue} = this.state;
         const request = user_login([userNameValue, passwordValue]);
         const response = await request.promise;
         console.log(response, 'response');
+        console.log(this.props, 'this.props');
+
+        if (response.error) {
+            this.setState({
+                errorText: response.error.message,
+            });
+        } else {
+            this.props.history.replace(`${this.props.match.url}platform`);
+        }
+
     }
+
+    handleClose(event: any) {
+        this.setState({
+            anchorEl: null,
+        });
+    };
+
 
     render() {
         const {classes} = this.props;
         const {
             userNameValue,
             passwordValue,
+            errorText,
         } = this.state;
+
         return (
             <React.Fragment>
                 <CssBaseline/>
@@ -72,49 +91,53 @@ class LOGIN extends React.Component<any, any> {
                             <LockIcon/>
                         </Avatar>
                         <Typography component="h1" variant="h5">
-                            Sign in
+                            用户登录
                         </Typography>
                         <form onSubmit={() => false} className={classes.form}>
                             <FormControl margin="normal" required fullWidth>
                                 <InputLabel
-                                    htmlFor="email"
-                                >Email Address</InputLabel>
+                                    // htmlFor="email"
+                                >账号：</InputLabel>
                                 <Input
                                     value={userNameValue}
                                     onChange={this.onEmailValueChange}
-                                    // id="email"
-                                    // name="email"
-                                    // autoComplete="email"
                                     autoFocus
                                 />
                             </FormControl>
                             <FormControl margin="normal" required fullWidth>
-                                <InputLabel htmlFor="password">Password</InputLabel>
+                                <InputLabel htmlFor="password">密码：</InputLabel>
                                 <Input
                                     value={passwordValue}
                                     onChange={this.onPasswordValueChange}
-                                    // name="password"
                                     type="password"
-                                    // id="password"
                                     autoComplete="current-password"
                                 />
                             </FormControl>
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary"/>}
-                                label="Remember me"
+                                label="记住密码"
                             />
                             <Button
                                 onClick={this.onSignInButtonClick}
-                                // type="submit"
                                 fullWidth
                                 variant="contained"
                                 color="primary"
                                 className={classes.submit}
                             >
-                                Sign in
+                                登录
                             </Button>
+
+                            {
+                                errorText
+                                    ? (<div style={{padding: '20px 10px 0'}}>
+                                        <div style={{color: 'red'}}>* {errorText}</div>
+                                    </div>)
+                                    : null
+                            }
+
                         </form>
                     </Paper>
+
                 </main>
             </React.Fragment>
         );
