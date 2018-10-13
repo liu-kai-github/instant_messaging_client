@@ -18,7 +18,7 @@ import {user_login} from 'src/http/user';
 
 import styles from './styles';
 
-class App extends React.Component<any, any> {
+class LOGIN extends React.Component<any, any> {
 
     constructor(props: any) {
         super(props);
@@ -121,4 +121,4 @@ class App extends React.Component<any, any> {
     }
 }
 
-export default withStyles(styles)(App);
+export default withStyles(styles)(LOGIN);
