@@ -7,14 +7,15 @@ import {
 
 import LOGIN from "src/views";
 import PLATFORM from "src/views/PLATFORM";
+import CHAT from "src/views/CHAT";
 
 function ROOT_ROUTE() {
     return (
         <Switch>
             {/*<Redirect*/}
-                {/*from='/'*/}
-                {/*to='/NormalLogin'*/}
-                {/*exact*/}
+            {/*from='/'*/}
+            {/*to='/NormalLogin'*/}
+            {/*exact*/}
             {/*/>*/}
             <Route
                 path="/"
@@ -24,6 +25,11 @@ function ROOT_ROUTE() {
             <Route
                 path="/platform"
                 component={PLATFORM}
+                exact
+            />
+            <Route
+                path="/chat/:targetUserID"
+                component={CHAT}
                 exact
             />
         </Switch>

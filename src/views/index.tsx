@@ -37,14 +37,12 @@ class LOGIN extends React.Component<any, any> {
     }
 
     onEmailValueChange(event: any) {
-        // console.log(event.target.value, 'event.target.value');
         this.setState({
             userNameValue: event.target.value,
         });
     }
 
     onPasswordValueChange(event: any) {
-        // console.log(event.target.value, 'event.target.value');
         this.setState({
             passwordValue: event.target.value,
         });
@@ -54,14 +52,13 @@ class LOGIN extends React.Component<any, any> {
         const {userNameValue, passwordValue} = this.state;
         const request = user_login([userNameValue, passwordValue]);
         const response = await request.promise;
-        console.log(response, 'response');
-        console.log(this.props, 'this.props');
 
         if (response.error) {
             this.setState({
                 errorText: response.error.message,
             });
         } else {
+            window.sessionStorage.setItem('sessionToken', response.result.sessionToken);
             this.props.history.replace(`${this.props.match.url}platform`);
         }
 

@@ -14,7 +14,7 @@ function connect(method: string, data: conectParams | conectParams[]): { promise
 
     const promise: AxiosPromise = axios({
         method: 'post',
-        url: 'http://localhost:8080/api',
+        url: 'http://192.168.1.29:8080/api',
         data,
         cancelToken: source.token,
         // baseURL,
